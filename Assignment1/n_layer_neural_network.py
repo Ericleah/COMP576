@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import datasets, linear_model
 
-from Assignment1.three_layer_neural_network import plot_decision_boundary, generate_data
+from Assignment1.three_layer_neural_network import plot_decision_boundary, generate_data, NeuralNetwork as DeepNeuralNetwork
 
 
 class Layer:
-    def __init__(self, input_dim, output_dim, actFun_type='tanh', reg_lambda=0.01, seed=0):
+    def __init__(self, input_dim, output_dim, actFun_type='tanh', reg_lambda=0.0001, seed=0):
         np.random.seed(seed)
         self.W = np.random.randn(input_dim, output_dim) / np.sqrt(input_dim)
         self.b = np.zeros((1, output_dim))
@@ -111,18 +112,36 @@ class DeepNeuralNetwork:
     def visualize_decision_boundary(self, X, y):
         plot_decision_boundary(lambda x: np.argmax(self.feedforward(x), axis=1), X, y)
 
-
+def generate_data():
+    '''
+    generate data
+    :return: X: input data, y: given labels
+    '''
+    np.random.seed(0)
+    X, y = datasets.make_circles(200, noise=0.20)
+    return X, y
 
 def main():
     X, y = generate_data()
     plt.scatter(X[:, 0], X[:, 1], s=40, c=y, cmap=plt.cm.Spectral)
     plt.show()
 
-    # Define a deeper network with two hidden layers
-    hidden_layers = [4, 5]
-    model = DeepNeuralNetwork(nn_input_dim=2, nn_output_dim=2, hidden_layers=hidden_layers, actFun_type='tanh')
-    model.fit_model(X, y)
-    model.visualize_decision_boundary(X, y)
+    # Experiment with different network configurations
+    configurations = [
+        {'hidden_layers': [4, 4], 'actFun_type': 'tanh'},
+        {'hidden_layers': [4, 4], 'actFun_type': 'sigmoid'},
+        {'hidden_layers': [4, 4], 'actFun_type': 'relu'},
+    ]
+
+    for config in configurations:
+        print(
+            f"Training model with {config['hidden_layers']} hidden layers and activation function {config['actFun_type']}.")
+
+        model = DeepNeuralNetwork(nn_input_dim=2, nn_output_dim=2, hidden_layers=config['hidden_layers'],
+                                  actFun_type=config['actFun_type'])
+        model.fit_model(X, y)
+        model.visualize_decision_boundary(X, y)
+
 
 if __name__ == "__main__":
     main()

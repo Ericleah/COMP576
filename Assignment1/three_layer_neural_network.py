@@ -221,11 +221,16 @@ def main():
     plt.scatter(X[:, 0], X[:, 1], s=40, c=y, cmap=plt.cm.Spectral)
     plt.show()
 
-    model = NeuralNetwork(nn_input_dim=2, nn_hidden_dim=3, nn_output_dim=2, actFun_type='tanh')
-    print(f"Using activation function: {model.actFun_type}")
+    model1 = NeuralNetwork(nn_input_dim=2, nn_hidden_dim=3, nn_output_dim=2, actFun_type='tanh')
+    model2 = NeuralNetwork(nn_input_dim=2, nn_hidden_dim=6, nn_output_dim=2, actFun_type='tanh')
+    model3 = NeuralNetwork(nn_input_dim=2, nn_hidden_dim=9, nn_output_dim=2, actFun_type='tanh')
+    model1.fit_model(X, y)
+    model1.visualize_decision_boundary(X, y)
+    model2.fit_model(X, y)
+    model2.visualize_decision_boundary(X, y)
+    model3.fit_model(X, y)
+    model3.visualize_decision_boundary(X, y)
 
-    model.fit_model(X, y)
-    model.visualize_decision_boundary(X, y)
 
 
 if __name__ == "__main__":
