@@ -154,6 +154,3 @@ for epoch in range(1, epochs + 1):
 
 writer.close()
 
-# Uncomment the following lines to run TensorBoard
-# %load_ext tensorboard
-# %tensorboard --logdir=runs

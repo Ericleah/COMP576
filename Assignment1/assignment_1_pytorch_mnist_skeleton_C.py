@@ -61,7 +61,6 @@ class Net(nn.Module):
         self.dropout = nn.Dropout(0.5)
 
         # Initialize weights if using a specific initialization technique
-        # Uncomment the following lines if you want to apply Xavier initialization
         # self._initialize_weights()
 
     def forward(self, x):
@@ -96,7 +95,6 @@ class Net(nn.Module):
 
         return x_fc2, x_act1, x_pool1, x_act2, x_pool2, x_fc1
 
-    # Uncomment this method if applying Xavier initialization
     # def _initialize_weights(self):
     #     for m in self.modules():
     #         if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
@@ -108,7 +106,6 @@ class Net(nn.Module):
 model = Net().to(device)
 
 # Apply weight initialization if desired
-# Uncomment the following lines to apply Xavier initialization
 # def init_weights(m):
 #     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
 #         init.xavier_uniform_(m.weight)
@@ -201,7 +198,3 @@ for epoch in range(1, epochs + 1):
     test(epoch)
 
 writer.close()
-
-# Uncomment the following lines to run TensorBoard
-# %load_ext tensorboard
-# %tensorboard --logdir=runs
